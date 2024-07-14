@@ -10,13 +10,14 @@ type ShowBalanceResult struct {
 type Recipt struct {
 	AccountID       string
 	TransactionType constants.TransactionType
+	Amount          uint64
 	BeforeBalance   int64
 	AfterBalance    int64
-	err             error
+	Error           error
 }
 
 type TransactionCommand struct {
 	Account         AccountInfo
 	TransactionType constants.TransactionType
-	Amount          int64
+	Amount          uint64
 }
