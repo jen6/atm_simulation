@@ -16,3 +16,7 @@ func (cb CompositeBank) FindBank(bankName string) (port.Bank, port.AccountReposi
 	}
 	return nil, nil, constants.BankNotFound
 }
+
+func (cb CompositeBank) ListBank() []string {
+	return []string{"mock_bank"}
+}

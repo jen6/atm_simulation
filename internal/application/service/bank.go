@@ -13,6 +13,10 @@ type BankService struct {
 	bank port.Bank
 }
 
+func NewBank(bank port.Bank) BankService {
+	return BankService{bank: bank}
+}
+
 func (bs BankService) ListAccount(ctx context.Context, command usecase.ListAccountCommand) (optional.Option[usecase.ListAccountResult], error) {
 
 	timeOutCtx, cancelFunc := context.WithTimeout(ctx, 30*time.Second)

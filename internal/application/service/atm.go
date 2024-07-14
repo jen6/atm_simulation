@@ -16,6 +16,18 @@ type ATMService struct {
 	timestampGenerator TimestampGenerator
 }
 
+func NewATMService(
+	accountRepository port.AccountRepository,
+	cashbinRepository domain.CashbinRepository,
+	timestampGenerator TimestampGenerator,
+) ATMService {
+	return ATMService{
+		accountRepository:  accountRepository,
+		cashbinRepository:  cashbinRepository,
+		timestampGenerator: timestampGenerator,
+	}
+}
+
 func (as ATMService) ShowBalance(ctx context.Context, command usecase.ShowBalanceCommand) (usecase.ShowBalanceResult, error) {
 	timeoutCtx, cancelFunc := context.WithTimeout(ctx, 30*time.Second)
 	defer cancelFunc()
