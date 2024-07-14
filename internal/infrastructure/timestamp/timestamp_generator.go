@@ -3,12 +3,12 @@ package timestamp
 import "time"
 
 type TimestampGenerator struct {
-	fixedTimestamp *time.Time
+	FixedTimestamp *time.Time
 }
 
 func (t TimestampGenerator) Now() time.Time {
-	if t.fixedTimestamp != nil {
-		return *t.fixedTimestamp
+	if t.FixedTimestamp != nil {
+		return *t.FixedTimestamp
 	}
 	return time.Now()
 }

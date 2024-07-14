@@ -3,22 +3,22 @@ package persistence
 import "github.com/jen6/bank_simulation/internal/domain"
 
 type CashbinRepo struct {
-	cashbin *domain.CashBin
+	Cashbin *domain.CashBin
 }
 
 func NewCashbinRepo(balance uint64) CashbinRepo {
-	cashbin := domain.NewCashBin("abcd", 200)
+	cashbin := domain.NewCashBin("abcd", balance)
 	return CashbinRepo{
-		cashbin: &cashbin,
+		Cashbin: &cashbin,
 	}
 
 }
 
 func (repo CashbinRepo) Get(id string) (domain.CashBin, error) {
-	return *repo.cashbin, nil
+	return *repo.Cashbin, nil
 }
 
 func (repo CashbinRepo) Update(cashbin domain.CashBin) error {
-	repo.cashbin = &cashbin
+	repo.Cashbin = &cashbin
 	return nil
 }

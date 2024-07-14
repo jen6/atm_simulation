@@ -80,7 +80,7 @@ func (atm ATM) Run() {
 	}
 
 	accountIdx := -1
-	fmt.Println("Choose Account\n")
+	fmt.Println("Choose Account")
 	for i, account := range accounts.Accounts {
 		fmt.Println(i+1, " ", account.AccountID)
 	}
@@ -112,7 +112,7 @@ func (atm ATM) ShowBalance(ctx context.Context, atmService application.ATMServic
 	if err != nil {
 		return err
 	}
-	fmt.Println("Current Balance is ", result.CurrentBalance)
+	fmt.Println("Current Balance is", result.CurrentBalance)
 	return nil
 }
 
@@ -146,7 +146,7 @@ func (atm ATM) chooseAction(ctx context.Context, atmService application.ATMServi
 		}
 
 		fmt.Println("Transaction Completed")
-		fmt.Println("Current Balance is ", result.BankRecipt.AfterBalance)
+		fmt.Println("Current Balance is", result.BankRecipt.AfterBalance)
 		return nil
 	} else if option == 2 {
 		fmt.Println("How much money do you want?: ")
@@ -170,7 +170,7 @@ func (atm ATM) chooseAction(ctx context.Context, atmService application.ATMServi
 		}
 
 		fmt.Println("Transaction Completed")
-		fmt.Println("Current Balance is ", result.BankRecipt.AfterBalance)
+		fmt.Println("Current Balance is", result.BankRecipt.AfterBalance)
 		return nil
 	}
 
