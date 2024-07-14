@@ -3,7 +3,7 @@ package port
 import (
 	"context"
 
-	"github.com/jen6/bank_simulation/internal/application/constants"
+	"github.com/jen6/bank_simulation/internal/constants"
 	"github.com/jen6/bank_simulation/internal/utils/optional"
 )
 
