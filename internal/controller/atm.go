@@ -3,6 +3,7 @@ package controller
 import (
 	"context"
 	"fmt"
+	"os"
 
 	application "github.com/jen6/bank_simulation/internal/application/service"
 	"github.com/jen6/bank_simulation/internal/application/usecase"
@@ -19,6 +20,7 @@ type ATM struct {
 	timestampGenerator timestamp.TimestampGenerator
 	cashbinHardware    port.Cashbin
 	cashbinRepo        persistence.CashbinRepo
+	inputReader        *os.File
 }
 
 func NewATM(
@@ -27,6 +29,7 @@ func NewATM(
 	cashbinHardware port.Cashbin,
 	cashbinRepo persistence.CashbinRepo,
 	timestampGenerator timestamp.TimestampGenerator,
+	inputReader *os.File,
 ) ATM {
 	return ATM{
 		id:                 id,
@@ -34,6 +37,7 @@ func NewATM(
 		cashbinHardware:    cashbinHardware,
 		cashbinRepo:        cashbinRepo,
 		timestampGenerator: timestampGenerator,
+		inputReader:        inputReader,
 	}
 }
 
@@ -43,13 +47,13 @@ func (atm ATM) Run() {
 	var cardNumber, pin, bankName string
 	fmt.Println("-----------------------------")
 	fmt.Print("Input Card Number : ")
-	fmt.Scan(&cardNumber)
+	fmt.Fscan(atm.inputReader, &cardNumber)
 
 	fmt.Print("Input Pin Number : ")
-	fmt.Scan(&pin)
+	fmt.Fscan(atm.inputReader, &pin)
 
 	fmt.Print(atm.banks.ListBank(), " Choose bank : ")
-	fmt.Scan(&bankName)
+	fmt.Fscan(atm.inputReader, &bankName)
 
 	bank, accountRepo, err := atm.banks.FindBank(bankName)
 	if err != nil {
@@ -80,7 +84,7 @@ func (atm ATM) Run() {
 	for i, account := range accounts.Accounts {
 		fmt.Println(i+1, " ", account.AccountID)
 	}
-	fmt.Scan(&accountIdx)
+	fmt.Fscan(atm.inputReader, &accountIdx)
 
 	if !(1 <= accountIdx && accountIdx <= len(accounts.Accounts)) {
 		fmt.Println("There are no account ", accountIdx)
@@ -118,11 +122,11 @@ func (atm ATM) chooseAction(ctx context.Context, atmService application.ATMServi
 	fmt.Println("1. Deposite")
 	fmt.Println("2. Withdraw")
 
-	fmt.Scan(&option)
+	fmt.Fscan(atm.inputReader, &option)
 
 	if option == 1 {
 		fmt.Println("Put Money : ")
-		fmt.Scan(&amount)
+		fmt.Fscan(atm.inputReader, &amount)
 
 		command := usecase.TransactionCommand{
 			AtmId:           atm.id,
@@ -146,7 +150,7 @@ func (atm ATM) chooseAction(ctx context.Context, atmService application.ATMServi
 		return nil
 	} else if option == 2 {
 		fmt.Println("How much money do you want?: ")
-		fmt.Scan(&amount)
+		fmt.Fscan(atm.inputReader, &amount)
 
 		command := usecase.TransactionCommand{
 			AtmId:           atm.id,
