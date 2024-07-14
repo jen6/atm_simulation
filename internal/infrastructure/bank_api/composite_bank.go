@@ -10,9 +10,9 @@ type CompositeBank struct {
 	mockBank mbank.MockBank
 }
 
-func NewCompositeBank(balance int64) CompositeBank {
+func NewCompositeBank(mockBank mbank.MockBank) CompositeBank {
 	return CompositeBank{
-		mockBank: mbank.NewMockBank(balance),
+		mockBank: mockBank,
 	}
 }
 

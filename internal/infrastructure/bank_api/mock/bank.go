@@ -10,11 +10,16 @@ import (
 )
 
 type MockBank struct {
-	balance *int64
+	balance                            *int64
+	getBalanceErr, applyTransactionErr error
 }
 
-func NewMockBank(balance int64) MockBank {
-	return MockBank{balance: &balance}
+func NewMockBank(balance int64, getBalanceErr, applyTransactionErr error) MockBank {
+	return MockBank{
+		balance:             &balance,
+		getBalanceErr:       getBalanceErr,
+		applyTransactionErr: applyTransactionErr,
+	}
 }
 
 func (bank MockBank) ListAccounts(ctx context.Context, cardNumber string, pinNumber string) ([]port.AccountInfo, error) {
