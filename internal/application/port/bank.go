@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/jen6/bank_simulation/internal/application/constants"
+	"github.com/jen6/bank_simulation/internal/utils/optional"
 )
 
 type AccountInfo struct {
@@ -12,7 +13,6 @@ type AccountInfo struct {
 }
 
 type Transaction struct {
-	ID     string
 	Type   constants.TransactionType
 	Amount uint64
 }
@@ -25,7 +25,9 @@ type TransactionResult struct {
 
 type Bank interface {
 	ListAccounts(ctx context.Context, cardNumber string, pinNumber string) ([]AccountInfo, error)
+}
+
+type AccountRepository interface {
 	GetBalance(ctx context.Context, accountInfo AccountInfo) (int64, error)
-	BeginTransaction(ctx context.Context, accountInfo AccountInfo) (string, error)
-	ApplyTransaction(ctx context.Context, accountInfo AccountInfo, transaction Transaction) (TransactionResult, error)
+	ApplyTransaction(ctx context.Context, accountInfo AccountInfo, transaction Transaction) (optional.Option[TransactionResult], error)
 }
