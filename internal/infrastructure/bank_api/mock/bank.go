@@ -14,6 +14,9 @@ type MockBank struct {
 }
 
 func (bank MockBank) ListAccounts(ctx context.Context, cardNumber string, pinNumber string) ([]port.AccountInfo, error) {
+	if !(cardNumber == "1234" && pinNumber == "1234") {
+		return nil, constants.WrongBankAuthorizationInfo
+	}
 	return []port.AccountInfo{
 		{AccountID: "test account1", SessionID: "test sessionid1"},
 		{AccountID: "test account2", SessionID: "test sessionid2"},
