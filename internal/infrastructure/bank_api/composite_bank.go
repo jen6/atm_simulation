@@ -10,6 +10,12 @@ type CompositeBank struct {
 	mockBank mbank.MockBank
 }
 
+func NewCompositeBank(balance int64) CompositeBank {
+	return CompositeBank{
+		mockBank: mbank.NewMockBank(balance),
+	}
+}
+
 func (cb CompositeBank) FindBank(bankName string) (port.Bank, port.AccountRepository, error) {
 	if bankName == "mock_bank" {
 		return &cb.mockBank, &cb.mockBank, nil

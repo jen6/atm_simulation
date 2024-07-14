@@ -6,6 +6,14 @@ type CashbinRepo struct {
 	cashbin *domain.CashBin
 }
 
+func NewCashbinRepo(balance uint64) CashbinRepo {
+	cashbin := domain.NewCashBin("abcd", 200)
+	return CashbinRepo{
+		cashbin: &cashbin,
+	}
+
+}
+
 func (repo CashbinRepo) Get(id string) (domain.CashBin, error) {
 	return *repo.cashbin, nil
 }

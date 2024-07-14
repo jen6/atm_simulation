@@ -21,11 +21,20 @@ type ATM struct {
 	cashbinRepo        persistence.CashbinRepo
 }
 
-func NewItem(
+func NewATM(
 	id string,
+	banks bankapi.CompositeBank,
 	cashbinHardware port.Cashbin,
+	cashbinRepo persistence.CashbinRepo,
+	timestampGenerator timestamp.TimestampGenerator,
 ) ATM {
-	return ATM{id: id, cashbinHardware: cashbinHardware}
+	return ATM{
+		id:                 id,
+		banks:              banks,
+		cashbinHardware:    cashbinHardware,
+		cashbinRepo:        cashbinRepo,
+		timestampGenerator: timestampGenerator,
+	}
 }
 
 func (atm ATM) Run() {

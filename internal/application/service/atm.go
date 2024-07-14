@@ -2,6 +2,7 @@ package application
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/jen6/bank_simulation/internal/application/port"
@@ -88,7 +89,7 @@ func (as ATMService) withdraw(
 		result.WithdrawAmount = 0
 
 		cashbin.Rollback()
-		err = as.cashbinRepository.Update(cashbin)
+		err = errors.Join(err, as.cashbinRepository.Update(cashbin))
 	}
 	return result, err
 }
@@ -124,7 +125,7 @@ func (as ATMService) deposite(
 
 	if err != nil {
 		cashbin.Rollback()
-		err = as.cashbinRepository.Update(cashbin)
+		err = errors.Join(err, as.cashbinRepository.Update(cashbin))
 	}
 
 	return result, err

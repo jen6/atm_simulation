@@ -13,6 +13,13 @@ type CashBin struct {
 	currentTransaction optional.Option[Transaction]
 }
 
+func NewCashBin(id string, balance uint64) CashBin {
+	return CashBin{
+		ID:      id,
+		balance: balance,
+	}
+}
+
 func (atm *CashBin) Deposite(amount uint64, requestTime time.Time) {
 	atm.balance += amount
 	transaction := NewTransaction(
